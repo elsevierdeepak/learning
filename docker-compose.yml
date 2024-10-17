@@ -1,0 +1,26 @@
+version: '3'
+services:
+  plp:
+    build: ./plp
+    container_name: plp
+    restart: always
+    ports:
+      - "3000:3000"
+
+  bap:
+    build: ./bap
+    container_name: bap
+    restart: always
+    ports:
+      - "3001:3001"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - plp
+      - bap
